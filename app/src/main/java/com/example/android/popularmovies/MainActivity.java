@@ -162,14 +162,13 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
         }
         return true;
     }
-
     @Override
     protected void onStart() {
         super.onStart();
-        getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
-
+        if (PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)) {
+            getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
+        }
     }
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -177,8 +176,10 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
             if(PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)){
                 getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
                 mainBinding.moviesRv.setAdapter(movieCursorAdapter);
-            }else {
-                fetchData();}}
+            }else if (mainBinding.moviesRv.getVisibility()==View.INVISIBLE){
+                fetchData();}else {
+            }
+        }
     }
 
     @Override
