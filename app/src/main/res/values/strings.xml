@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+
+    <!--Menu Strings-->
+    <string name="sort_by">Movies Lists</string>
+    <string name="sort_popular">Popular Movies</string>
+    <string name="sort_top_rating">Top Rated</string>
+    <string name="Favourite_movies">Favourite Movies</string>
+
+    <!--Shared preferences Keys-->
+    <string name="user_sorting_Preference_key">shared preference Key</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="favourit_movie_preference">favourite movie key</string>
+
+
+    <!--Title Strings-->
+
+    <string name="pup">Popular Movies List</string>
+    <string name="top">Top Rated Movies List</string>
+    <string name="fav">Favourite Movies List</string>
+
+
+
+    <string name="trailer">Trailer: </string>
+    <string name="trailer_intent">Pick An App</string>
+
+</resources>
+
