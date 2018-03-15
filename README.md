@@ -18,3 +18,8 @@ PopularMovies (Udacity project, Stage 2) is a project requested by Udacity durin
 The App won't work as it doesn't contain the DB API KEY, you can request your own key through https://www.themoviedb.org/ .
 
 ## App screenshots:
+<img src = "screenShots/Screenshot1.png" width = "200">  <img src = "screenShots/Screenshot2.png" width = "200">  <img src = "screenShots/Screenshot3.png" width = "200">
+
+
+<img src = "screenShots/Screenshot4.png" width = "400">  <img src = "screenShots/Screenshot5.png" width = "400">
+
