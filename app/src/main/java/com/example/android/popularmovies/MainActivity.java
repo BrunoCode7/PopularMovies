@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -19,7 +19,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
     private final String URL_TOP_RATED_DATA =
             "https://api.themoviedb.org/3/movie/top_rated?api_key="+API_KEY;
     private final String URL_FAVOURITE_MOVIES="favourit movies";
+    private final String KEY_STATE_RV_POSITION="rv_position";
     private final String JOP_TAG = "jop";
     private String PREFERRED_URL;
     static JsonObjectRequest objectRequest;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
     private Movie chosenMovieWithGenre;
     public final static int MOVIES_LOADER_ID=0;
     MovieCursorAdapter movieCursorAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
+
 
 
     @Override
@@ -97,7 +100,8 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         movieCursorAdapter = new MovieCursorAdapter(context,this);
-        mainBinding.moviesRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), getSpanCount()));
+        mLayoutManager=new GridLayoutManager(getApplicationContext(), getSpanCount());
+        mainBinding.moviesRv.setLayoutManager(mLayoutManager);
         getSupportLoaderManager().initLoader(MOVIES_LOADER_ID, null, this);
 
 
@@ -118,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
         userPreferences = getPreferences(MODE_PRIVATE);
         PREFERRED_URL = userPreferences.getString(getString(R.string.user_sorting_Preference_key), URL_POPULAR_DATA);
         if(PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)){
-            getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
             mainBinding.moviesRv.setAdapter(movieCursorAdapter);
         }else {
         fetchData();}
@@ -165,9 +168,6 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
     @Override
     protected void onStart() {
         super.onStart();
-        if (PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)) {
-            getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
-        }
     }
     @Override
     protected void onRestart() {
@@ -220,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
 
 
                             movieAdapter = new MovieAdapter(context, moviesList, MainActivity.this);
-                            mainBinding.moviesRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), getSpanCount()));
                             mainBinding.moviesRv.setAdapter(movieAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
