@@ -169,18 +169,18 @@ public class MainActivity extends AppCompatActivity implements MovieCursorAdapte
     protected void onStart() {
         super.onStart();
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (isOnline() &&(PREFERRED_URL.equals(URL_POPULAR_DATA)||PREFERRED_URL.equals(URL_TOP_RATED_DATA))){
-            if(PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)){
+             if(PREFERRED_URL.equals(URL_FAVOURITE_MOVIES)){
                 getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
                 mainBinding.moviesRv.setAdapter(movieCursorAdapter);
             }else if (mainBinding.moviesRv.getVisibility()==View.INVISIBLE){
                 fetchData();}else {
             }
         }
-    }
+
 
     @Override
     protected void onStop() {
